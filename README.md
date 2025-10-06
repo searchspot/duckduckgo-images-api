@@ -47,6 +47,72 @@ main().catch(console.log);
 
 Please feel free to report any issues or feature requests.
 
+## REST API Server
+
+This package now includes a lightweight REST API server built with Fastify for making image search requests via HTTP.
+
+### Local Development
+
+1. **Setup environment variables:**
+```bash
+cp .env.example .env
+# Edit .env and set a secure API_TOKEN
+```
+
+2. **Start the server:**
+```bash
+npm start
+```
+
+3. **Make API requests:**
+
+**GET request:**
+```bash
+curl -H "x-api-token: your-secret-token" \
+  "http://localhost:3000/search?query=birds&moderate=true&iterations=2"
+```
+
+**POST request:**
+```bash
+curl -X POST \
+  -H "x-api-token: your-secret-token" \
+  -H "Content-Type: application/json" \
+  -d '{"query":"birds","moderate":true,"iterations":2}' \
+  http://localhost:3000/search
+```
+
+### API Endpoints
+
+- **GET/POST /search** - Search for images
+  - Authentication: Required (via `x-api-token` header or `Authorization: Bearer <token>`)
+  - Query parameters (GET): `query`, `moderate`, `retries`, `iterations`
+  - Body (POST): `{ "query": "...", "moderate": true, "retries": 2, "iterations": 2 }`
+  - Response: `{ "success": true, "query": "...", "count": 100, "results": [...] }`
+
+- **GET /health** - Health check endpoint (no authentication required)
+  - Response: `{ "status": "ok", "timestamp": "..." }`
+
+### Deploy to Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone)
+
+1. **Install Vercel CLI:**
+```bash
+npm i -g vercel
+```
+
+2. **Set environment variable:**
+```bash
+vercel env add API_TOKEN
+# Enter your secret API token when prompted
+```
+
+3. **Deploy:**
+```bash
+vercel --prod
+```
+
+Alternatively, connect your GitHub repository to Vercel and set the `API_TOKEN` environment variable in the Vercel dashboard.
 
 ### note
 
