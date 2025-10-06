@@ -2,8 +2,13 @@ require('dotenv').config();
 const fastify = require('fastify')({ logger: true });
 const { image_search } = require('./src/api');
 
-// Authentication middleware
+// Authentication middleware (skip for health check endpoints)
 fastify.addHook('onRequest', async (request, reply) => {
+    // Skip authentication for health check endpoints
+    if (request.url === '/health' || request.url === '/') {
+        return;
+    }
+
     const token = request.headers['x-api-token'] || request.headers['authorization']?.replace('Bearer ', '');
 
     if (!token || token !== process.env.API_TOKEN) {
@@ -11,16 +16,13 @@ fastify.addHook('onRequest', async (request, reply) => {
     }
 });
 
-// Health check endpoint (no auth required, checked before auth hook)
-fastify.get('/health', {
-    onRequest: (request, reply, done) => done() // Skip auth for health check
-}, async (request, reply) => {
+// Health check endpoint
+fastify.get('/health', async (request, reply) => {
     return { status: 'ok', timestamp: new Date().toISOString() };
 });
 
-fastify.get('/', {
-    onRequest: (request, reply, done) => done() // Skip auth for health check
-}, async (request, reply) => {
+// Root endpoint
+fastify.get('/', async (request, reply) => {
     return { status: 'ok', timestamp: new Date().toISOString() };
 });
 
