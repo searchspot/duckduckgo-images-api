@@ -18,6 +18,8 @@ module.exports = {
         q: null,
         vqd: null,
         f: ",,,",
-        p: null
+        p: null,
+        iax: 'images',
+        ia: 'images'
     }
 }

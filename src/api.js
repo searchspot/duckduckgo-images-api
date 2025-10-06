@@ -27,7 +27,9 @@ async function image_search({ query, moderate, retries, iterations }) {
             "q": keywords,
             "vqd": token,
             "f": ",,,",
-            "p": "" + (p)
+            "p": "" + (p),
+            "iax": "images",
+            "ia": "images"
         }
 
         let data = null;
@@ -112,7 +114,9 @@ async function* image_search_generator({ query, moderate, retries, iterations })
             "q": keywords,
             "vqd": token,
             "f": ",,,",
-            "p": "" + (p)
+            "p": "" + (p),
+            "iax": "images",
+            "ia": "images"
         }
         
         let itr = 0;
