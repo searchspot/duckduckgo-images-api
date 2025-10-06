@@ -41,7 +41,7 @@ async function image_search({ query, moderate, retries, iterations }) {
             while (true) {
                 try {
 
-                    console.log(`[image_search] Fetching iteration=${itr} attempt=${attempt + 1} url=${reqUrl} params=${params} headers=${headers}`);
+                    console.log(`[image_search] Fetching iteration=${itr} attempt=${attempt + 1} url=${reqUrl} params=${JSON.stringify(params)} headers=${JSON.stringify(headers)}`);
 
                     let response = await axios.get(reqUrl, {
                         params,
@@ -129,7 +129,7 @@ async function* image_search_generator({ query, moderate, retries, iterations })
             while (true) {
                 try {
 
-                    console.log(`[image_search_generator] Fetching iteration=${itr} attempt=${attempt + 1} url=${reqUrl} params=${params} headers=${headers}`);
+                    console.log(`[image_search_generator] Fetching iteration=${itr} attempt=${attempt + 1} url=${reqUrl} params=${JSON.stringify(params)} headers=${JSON.stringify(headers)}`);
 
                     let response = await axios.get(reqUrl, {
                         params,
