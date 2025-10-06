@@ -17,7 +17,7 @@ async function getToken(keywords) {
             }
         })
 
-        // console.log("Logging res.data", res.data)
+        console.log("Logging res.data", res.data)
         token = res.data.match(/vqd="([\d-]+)"/)[1]
 
     } catch (error) {
