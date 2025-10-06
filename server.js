@@ -80,23 +80,36 @@ fastify.post('/search', async (request, reply) => {
     }
 });
 
-// Start server
-const start = async () => {
-    try {
-        const port = process.env.PORT || 3000;
-        const host = process.env.HOST || '0.0.0.0';
+// Start server (only when running locally, not on Vercel)
+if (require.main === module) {
+    const start = async () => {
+        try {
+            const port = process.env.PORT || 3000;
+            const host = process.env.HOST || '0.0.0.0';
 
-        if (!process.env.API_TOKEN) {
-            fastify.log.error('API_TOKEN environment variable is not set!');
+            if (!process.env.API_TOKEN) {
+                fastify.log.error('API_TOKEN environment variable is not set!');
+                process.exit(1);
+            }
+
+            await fastify.listen({ port, host });
+            fastify.log.info(`Server running on http://${host}:${port}`);
+        } catch (err) {
+            fastify.log.error(err);
             process.exit(1);
         }
+    };
 
-        await fastify.listen({ port, host });
-        fastify.log.info(`Server running on http://${host}:${port}`);
-    } catch (err) {
-        fastify.log.error(err);
-        process.exit(1);
+    start();
+}
+
+// Export for Vercel
+module.exports = async (req, res) => {
+    if (!process.env.API_TOKEN) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ error: 'API_TOKEN environment variable is not set' }));
+        return;
     }
+    await fastify.ready();
+    fastify.server.emit('request', req, res);
 };
-
-start();
