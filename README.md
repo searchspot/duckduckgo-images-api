@@ -2,8 +2,6 @@
 
 A lightweight node package to programmatically obtain image search results from DuckDuckGo search engine.
 
-The method used is inspired from [python package](https://github.com/deepanprabhu/duckduckgo-images-api) with same name. Thanks to, [deepanprabhu](https://github.com/deepanprabhu) for original source. This is my first node package and it was fun to write.
-
 ## usage
 
 To install, run:
