@@ -18,6 +18,12 @@ fastify.get('/health', {
     return { status: 'ok', timestamp: new Date().toISOString() };
 });
 
+fastify.get('/', {
+    onRequest: (request, reply, done) => done() // Skip auth for health check
+}, async (request, reply) => {
+    return { status: 'ok', timestamp: new Date().toISOString() };
+});
+
 // Image search endpoint
 fastify.get('/search', async (request, reply) => {
     const { query, moderate, retries, iterations } = request.query;
