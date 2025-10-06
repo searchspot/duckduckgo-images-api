@@ -89,3 +89,14 @@ typings/
 .dynamodb/
 
 # End of https://www.gitignore.io/api/node
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
